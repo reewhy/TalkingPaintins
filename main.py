@@ -46,13 +46,15 @@ while True:
 
     # Se il video sta riproducendo, mostra la scritta "playing"
     # Se no, ma il video è avviabile, mostra la scritta "not playing"
-    # Altrimenti mostra la scritta "Cooldown"
+    # Altrimenti mostra quanti secondi restano per poter riprodurre il video
     if video_playing:
-        cv2.putText(frame, 'Playing...', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+        cv2.putText(frame, 'Playing...', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
     elif can_play:
-        cv2.putText(frame, 'Not playing', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+        cv2.putText(frame, 'Not playing', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
     else:
-        cv2.putText(frame, 'Cooldown', (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+        # Prendi il valore assoluto dell'ultima volta che è stato avviato meno l'ora attuale e aggiungici uno
+        cd = abs(last_played.second - datetime.datetime.now().second)+1
+        cv2.putText(frame, str(cd), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
     # Se il video sta riproducendo
     if video_playing:
